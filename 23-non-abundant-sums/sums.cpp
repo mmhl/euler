@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <set>
 #include <numeric>
 
 
@@ -31,14 +32,36 @@ bool is_abundant(int num)
 int main(int argc, char *argvp[])
 {
 	int num = 12;
-	vector<int> ab_num;
+	set<int> ab_num;
+	set<int> numbers;
+	set<int> ab_sum;
+	set<int> result;
 	for(int i= 1; i <= 28123; i++)
 	{
 		if(is_abundant(i))
 		{
-			ab_num.push_back(i);
-			cout << i << ", ";
+			ab_num.insert(i);
+		}
+		numbers.insert(i);
+	}
+
+	set<int>::iterator it1, it2;
+	for(it1 = ab_num.begin(); it1 != ab_num.end(); it1++)
+	{
+		for(it2 = it1; it2 != ab_num.end(); it2++)
+		{
+			ab_sum.insert(*it1 + *it2);
 		}
 	}
 
+	cout << endl;
+	set_difference(numbers.begin(), numbers.end(), ab_sum.begin(), ab_sum.end(), inserter(result, result.end()));
+	
+	for(it1 = result.begin(); it1 != result.end(); it1++)
+	{
+		cout  << *it1 << ", ";
+	}
+	cout << endl;
+	cout << accumulate(result.begin(), result.end(), 0);
+	cout << endl;
 }
