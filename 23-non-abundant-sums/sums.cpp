@@ -56,11 +56,6 @@ int main(int argc, char *argvp[])
 
 	cout << endl;
 	set_difference(numbers.begin(), numbers.end(), ab_sum.begin(), ab_sum.end(), inserter(result, result.end()));
-	
-	for(it1 = result.begin(); it1 != result.end(); it1++)
-	{
-		cout  << *it1 << ", ";
-	}
 	cout << endl;
 	cout << accumulate(result.begin(), result.end(), 0);
 	cout << endl;
