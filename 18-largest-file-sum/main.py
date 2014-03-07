@@ -15,18 +15,28 @@ def read_input():
     int_list = []
   return lines_list
 
+def print_pyramid(numbers):
+	for line in numbers:
+		for number in line:
+			print number,
+		print
+
 #sum biggest number neighbours
 def sum_biggest(numbers):
-  last_index = 0
-  neighbour_left = 0
-  neighbour_right = 0
-  for line in numbers:
-    for number in line:
-      last_index = line.index(number)
-      neighbour_left = last_index
-      neighbour_right = neighbour_left + 1
-      print "New neighbours for number " + str(number) +" are here: ", neighbour_left, neighbour_right
-  
+	print_pyramid(numbers)
+	if len(numbers) == 1:
+		return numbers[0]
+	current = numbers[-2]
+	previous = numbers[-1]
+	best_row= []
+	for j in range(0, len(current)):
+		best = max(current[j]+previous[j], current[j]+previous[j+1])
+		best_row.append(best)
+	del numbers[-1]
+	del numbers[-1]
+	numbers.append(best_row)
+	return sum_biggest(numbers)
+	
 
 def main():
   sum_biggest(read_input())
