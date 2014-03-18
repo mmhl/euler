@@ -1,10 +1,13 @@
+import sys
 import math
+sys.path.insert(0, "../common/primes/")
+from fermat import prime_fermat
 
 factors = []
 def factor(number):
 	if number == 0:
 		return [] 
-	for i in xrange(2, number+1):
+	for i in prime_fermat(1, number+1):
 		if number % i == 0:
 			factors.append(i)
 			factor(number/i)
