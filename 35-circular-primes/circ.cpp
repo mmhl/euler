@@ -3,6 +3,7 @@
 #include <string.h>
 #include <algorithm>
 #include <vector>
+#include <deque>
 #include <math.h>
 
 #define NUMBERS 1000000
@@ -28,43 +29,54 @@ int to_int(const int *digits, int len)
 	}
 	return number;
 }
-vector<int> permutations(int num)
-{	
-	int digit;	
-	int number;
-	vector<int> digits;
-	vector<int> perms;
-	while(num > 0) {
-		digit = num % 10;
-		num /= 10;
-		digits.push_back(digit);
-	}
-	int *digit_array = &digits[0];
+int to_int(deque<int> digits)
+{
 	int len = digits.size();
-	sort(digit_array, digit_array+len);
-	do {
-		number = to_int(digit_array, len);
-		perms.push_back(number);
-	} while(next_permutation(digit_array, digit_array+len));
-	cout << "Permutations: "; 
+	int number=0;
 	for(int i = 0; i < len; i++) {
-		cout << perms[i] << " " ;
+		number += digits[i]*(pow(10,len-i-1));
 	}
-	cout << endl;
-	return perms;
+	return number;
 }
 
+deque<int> to_digit_array(int number)
+{
+	deque<int> digits;
+	while(number > 0) {
+		int digit = number%10;
+		number /= 10;
+		digits.push_front(digit);
+	}
+	return digits;
+}
+
+vector<int> get_rotations(int num) 
+{
+	vector<int> vec;
+	deque<int> digits = to_digit_array(num);
+	int origin = num;
+	do {
+		vec.push_back(to_int(digits));
+		rotate(digits.begin(), digits.begin()+1, digits.end());	
+	} while(origin != to_int(digits));
+	return vec;
+}
 int main() 
 {
 	int count = 0;
 	init_sieve();
 	for(int i = 2; i < NUMBERS; i++) {
 		if(sieve[i] == true) {
-			vector<int> perms = permutations(i);
-			for(int j = 0; j < perms.size(); j++)  {
-				if(sieve[perms[j]] == false) break;
+			bool ok = true;
+			vector<int> rotations = get_rotations(i);
+			for(int j = 0; j < rotations.size(); j++)  {
+				if(sieve[rotations[j]] == false) { 
+					ok =false;
+					break;
+				}
 			}
-			cout << ++count << ": " << i << endl;
+			if(ok)
+				cout << ++count << ": " << i << endl;
 		}
 	}
 }
