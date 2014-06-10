@@ -1,6 +1,14 @@
+toDigits :: Int -> [Int]
+toDigits 0 = []
+toDigits x = toDigits ( x `div` 10) ++ [x `mod` 10]
+
+toDigitsReverse :: Int -> [Int]
+toDigitsReverse 0 = []
+toDigitsReverse x = x `mod` 10 : toDigitsReverse(x `div` 10)
+
 isPalindrome :: Int -> Bool
 isPalindrome x 
-	| show x == (reverse . show) x = True
+	| toDigits x == toDigitsReverse x = True
 	| otherwise = False
 
 main = do
