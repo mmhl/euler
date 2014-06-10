@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
 		for(j = i; j > 100; j--)
 		{
 			number = i*j;		
+			if(number % 11 != 0)
+				continue;
 			multiples++;	
 			digits = digits_in_number(number);
 			if(is_palindrome(number, digits)) 
