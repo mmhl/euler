@@ -30,15 +30,16 @@ lookupTable = [ (1, "one")
                ]
 
 hundreds = "hundreds"
+thousands = "thousands"
 
 readTens :: Int -> Maybe String
 readTens x 
         | x <= 0 && x >=100  = Nothing
         | lookupNumber x /= Nothing = lookupNumber x
-        | otherwise = merge $ map (fromMaybe.lookupNumber) [tens x, ones x]
+        | otherwise = Just $ merge $ map (fromJust.lookupNumber) [tens x, ones x]
         where lookupNumber y = lookup y lookupTable
               tens x = x `div` 10 * 10
               ones x = x - tens x
               merge xs  = intercalate "-" xs
                 
-               
+ 
