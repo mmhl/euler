@@ -3,8 +3,8 @@ import Data.List
 
 collatz :: (Integral a) => a -> a
 collatz 1 = 1
-collatz n = if odd n then 1 + collatz (3*n+1) 
-            else 1 + collatz(n `div` 2)
+collatz n = 1 + if odd n then collatz (3*n+1) 
+            else collatz(n `div` 2)
 
 collatzSeq :: (Integral a) => a -> [a] 
 collatzSeq 1 = [1]
