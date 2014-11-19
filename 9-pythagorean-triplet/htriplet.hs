@@ -1,4 +1,4 @@
-import Data.List
+import Data.List (find,sort)
 import Control.Applicative ((<$>))
 
 main = do
