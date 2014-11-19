@@ -11,7 +11,7 @@ factor x = factorize x 2
 divisorsNum :: (Num a, Eq a, Integral a) => a -> Int
 divisorsNum x = product $ map(\x -> length x + 1) $ group $ factor x
 
-triangles = map(\x -> (x*(x+1))`div`2) [1..]
+triangles = scanl (+) 1 [2..]
 
 euler12 = fromJust $ find(\x -> divisorsNum x > 500) triangles
 main = do (putStrLn.show) euler12
